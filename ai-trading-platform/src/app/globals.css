@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --terminal-bg: #080c14;
+    --terminal-surface: #0d1421;
+    --terminal-border: #1a2540;
+    --terminal-muted: #1e2d4a;
+    --terminal-text: #c8d8f0;
+    --terminal-dim: #5a7a9f;
+    --terminal-accent: #00d4ff;
+    --terminal-green: #00ff9f;
+    --terminal-red: #ff3d6b;
+    --terminal-gold: #ffd700;
+    --terminal-orange: #ff8c00;
+    --terminal-purple: #a855f7;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    background-color: var(--terminal-bg);
+    color: var(--terminal-text);
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--terminal-surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--terminal-border);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--terminal-dim);
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(0, 212, 255, 0.2);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Terminal panels */
+  .panel {
+    @apply bg-terminal-surface border border-terminal-border rounded-lg;
+  }
+
+  .panel-header {
+    @apply flex items-center justify-between px-3 py-2 border-b border-terminal-border;
+  }
+
+  .panel-title {
+    @apply text-xs font-mono font-semibold text-terminal-dim uppercase tracking-widest;
+  }
+
+  /* Metric cards */
+  .metric-card {
+    @apply bg-terminal-surface border border-terminal-border rounded-lg p-3;
+  }
+
+  .metric-value {
+    @apply font-mono text-lg font-bold text-terminal-text;
+  }
+
+  .metric-label {
+    @apply text-xs text-terminal-dim font-mono uppercase tracking-wider;
+  }
+
+  /* Positive/Negative colors */
+  .positive {
+    @apply text-terminal-green;
+  }
+
+  .negative {
+    @apply text-terminal-red;
+  }
+
+  /* Glow effects */
+  .glow-green {
+    text-shadow: 0 0 10px rgba(0, 255, 159, 0.6);
+  }
+
+  .glow-red {
+    text-shadow: 0 0 10px rgba(255, 61, 107, 0.6);
+  }
+
+  .glow-accent {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply bg-terminal-accent text-terminal-bg font-mono font-semibold text-xs px-3 py-1.5 rounded hover:bg-opacity-90 transition-all duration-150 uppercase tracking-wider;
+  }
+
+  .btn-danger {
+    @apply bg-terminal-red text-white font-mono font-semibold text-xs px-3 py-1.5 rounded hover:bg-opacity-90 transition-all duration-150 uppercase tracking-wider;
+  }
+
+  .btn-ghost {
+    @apply border border-terminal-border text-terminal-dim font-mono text-xs px-3 py-1.5 rounded hover:border-terminal-accent hover:text-terminal-accent transition-all duration-150 uppercase tracking-wider;
+  }
+
+  .btn-green {
+    @apply bg-terminal-green text-terminal-bg font-mono font-semibold text-xs px-3 py-1.5 rounded hover:bg-opacity-90 transition-all duration-150 uppercase tracking-wider;
+  }
+
+  /* Tags / badges */
+  .badge {
+    @apply inline-flex items-center px-1.5 py-0.5 rounded text-xs font-mono font-semibold;
+  }
+
+  .badge-bullish {
+    @apply badge bg-terminal-green bg-opacity-20 text-terminal-green;
+  }
+
+  .badge-bearish {
+    @apply badge bg-terminal-red bg-opacity-20 text-terminal-red;
+  }
+
+  .badge-neutral {
+    @apply badge bg-terminal-dim bg-opacity-20 text-terminal-dim;
+  }
+
+  /* Input styles */
+  .input-terminal {
+    @apply bg-terminal-bg border border-terminal-border rounded px-2 py-1.5 text-terminal-text font-mono text-xs focus:outline-none focus:border-terminal-accent transition-colors;
+  }
+
+  /* Agent status indicators */
+  .status-active { @apply bg-terminal-green; }
+  .status-analyzing { @apply bg-terminal-accent; }
+  .status-waiting { @apply bg-terminal-gold; }
+  .status-paused { @apply bg-terminal-dim; }
+  .status-retired { @apply bg-terminal-red; }
+
+  /* Win rate badge colors */
+  .winrate-elite {
+    @apply bg-terminal-gold bg-opacity-20 text-terminal-gold;
+  }
+  .winrate-good {
+    @apply bg-terminal-green bg-opacity-20 text-terminal-green;
+  }
+  .winrate-acceptable {
+    @apply bg-yellow-500 bg-opacity-20 text-yellow-400;
+  }
+  .winrate-poor {
+    @apply bg-terminal-red bg-opacity-20 text-terminal-red;
+  }
+
+  /* Scan line animation for terminal effect */
+  .scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.05) 2px,
+      rgba(0, 0, 0, 0.05) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Grid pattern background */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(26, 37, 64, 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 37, 64, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+/* Chart container */
+.chart-container {
+  position: relative;
+}
+
+/* Animated ticker */
+@keyframes ticker-scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.ticker-scroll {
+  animation: ticker-scroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+/* Pulse indicator */
+@keyframes pulse-indicator {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.live-indicator {
+  animation: pulse-indicator 1.5s ease-in-out infinite;
+}
+
+/* Kill switch glow */
+.kill-switch-active {
+  box-shadow: 0 0 20px rgba(255, 61, 107, 0.5), 0 0 40px rgba(255, 61, 107, 0.2);
+}
+
+/* Profit waterfall */
+.waterfall-positive {
+  fill: rgba(0, 255, 159, 0.7);
+  stroke: #00ff9f;
+}
+
+.waterfall-negative {
+  fill: rgba(255, 61, 107, 0.7);
+  stroke: #ff3d6b;
+}
